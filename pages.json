@@ -1,0 +1,20 @@
+{
+	"pages": [ 
+		{
+			"path": "pages/main/main",
+			"style": {
+				"navigationBarTitleText": "点餐小程序",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "点餐小程序",
+		"navigationBarBackgroundColor": "#E30019",
+		"backgroundColor": "#FFFFFF",
+		"onReachBottomDistance": 50
+	},
+	"uniIdRouter": {}
+}
