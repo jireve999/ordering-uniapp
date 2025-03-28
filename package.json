@@ -1,0 +1,25 @@
+{
+  "name": "ordering-app",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jireve999/ordering-uniapp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jireve999/ordering-uniapp/issues"
+  },
+  "homepage": "https://github.com/jireve999/ordering-uniapp#readme",
+  "description": "",
+  "dependencies": {
+    "@dcloudio/uni-app": "2.0.2-4050720250324001",
+    "vue": "^3.2.0",
+    "vuex": "^4.0.0"
+  }
+}

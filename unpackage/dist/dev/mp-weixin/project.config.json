@@ -20,7 +20,7 @@
   "compileType": "miniprogram",
   "libVersion": "3.7.11",
   "appid": "wx1a60b8a21d893299",
-  "projectname": "ordering-app",
+  "projectname": "点餐小程序",
   "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",

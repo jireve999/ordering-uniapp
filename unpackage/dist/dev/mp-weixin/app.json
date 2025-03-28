@@ -9,5 +9,13 @@
     "backgroundColor": "#FFFFFF",
     "onReachBottomDistance": 50
   },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "获取地理位置显示附近的商家"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
   "usingComponents": {}
 }

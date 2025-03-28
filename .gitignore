@@ -1,0 +1,42 @@
+# 基础通用忽略规则
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
+
+# 依赖目录
+node_modules/
+unpackage/ # uni-app 打包输出目录
+
+# IDE配置
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+.project
+.settings/
+
+# 环境文件（保留示例文件）
+.env.local
+.env.*.local
+
+# 编译产物
+dist/
+build/
+.hbuilderx/ # HBuilderX 工作区配置
+
+# TypeScript 生成文件
+*.js.map
+*.js
+
+# 特殊文件
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 测试相关
+.nyc_output
+coverage/

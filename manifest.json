@@ -1,5 +1,5 @@
 {
-    "name" : "ordering-app",
+    "name" : "点餐小程序",
     "appid" : "__UNI__08687DF",
     "description" : "",
     "versionName" : "1.0.0",
@@ -57,7 +57,13 @@
             "minified" : true,
             "postcss" : true
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "获取地理位置显示附近的商家"
+            }
+        },
+        "requiredPrivateInfos" : [ "getLocation" ]
     },
     "mp-alipay" : {
         "usingComponents" : true

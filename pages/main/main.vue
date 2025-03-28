@@ -2,7 +2,7 @@
 	<view class="page">
 		<view class="status_bar"></view>
 		<view class="header">
-			<view :class="{'search-header':true,ipx:true}">
+			<view :class="{'search-header':true,ipx:isIpx}">
 				<view class="search-wrap">
 					<view class="icon"></view>
 					<view class="text">请输入商家名或菜品</view>
@@ -10,41 +10,15 @@
 			</view>
 		</view>
 		<view class="shop-main">
-			<view class="shop-list">
+			<view class="shop-list" v-for="item in shops" :key="item.branch_shop_id">
 				<view class="shop-wrap">
 					<view class="image">
-						<image src="https://diancan.lucklnk.com/businessfiles/logo/1600743948.jpg" />
+						<image :src="item.logo" />
 					</view>
 					<view class="shop-info">
-						<view class="shop-name">麦当劳</view>
-						<view class="distance">1.2km</view>
-						<view class="address">广东省广州市天河区天河路</view>
-						<view class="pack-btn">自提</view>
-					</view>	
-				</view>
-			</view>
-			<view class="shop-list">
-				<view class="shop-wrap">
-					<view class="image">
-						<image src="https://diancan.lucklnk.com/businessfiles/logo/1600743948.jpg" />
-					</view>
-					<view class="shop-info">
-						<view class="shop-name">麦当劳</view>
-						<view class="distance">1.2km</view>
-						<view class="address">广东省广州市天河区天河路</view>
-						<view class="pack-btn">自提</view>
-					</view>	
-				</view>
-			</view>
-			<view class="shop-list">
-				<view class="shop-wrap">
-					<view class="image">
-						<image src="https://diancan.lucklnk.com/businessfiles/logo/1600743948.jpg" />
-					</view>
-					<view class="shop-info">
-						<view class="shop-name">麦当劳</view>
-						<view class="distance">1.2km</view>
-						<view class="address">广东省广州市天河区天河路</view>
+						<view class="shop-name">{{item.branch_shop_name}}</view>
+						<view class="distance">{{ item.distance }}</view>
+						<view class="address">{{ item.address }}</view>
 						<view class="pack-btn">自提</view>
 					</view>	
 				</view>
@@ -53,11 +27,74 @@
 	</view>
 </template>
 
-<script>
-	import {defineComponent} from "vue";
+<script lang="ts">
+	import {defineComponent, computed} from "vue";
+	import {useStore} from "vuex";
+	import {onShow} from "@dcloudio/uni-app"; // 导入uni-app
 	export default defineComponent({
+		onShareAppMessage(res:any){
+			// if (res.from === 'menu') {
+				return {
+					title: '点餐小程序',
+					path: '/pages/main/main'
+				}
+			// }
+		},
 		setup() {
-			return {}
+			let store:any = useStore();
+			let isIpx:any = computed(()=>store.state.system.isIpx); // 获取vuex中isIpx的值
+			let shops:any = computed(() => store.state.business.shops); // 获取vuex的商铺数据
+			let lng:number=0; // 经度
+			let lat:number=0; // 纬度
+			let maxPage:number=0;//总页数
+			onShow(() => {
+				//#ifdef MP-WEIXIN || H5 && APP
+				//如果用户关闭了地理位置功能
+				//getSetting获取用户的当前设置
+				uni.getSetting({
+					success: (res:any) => {
+						console.log(res.authSetting, res.authSetting["scope.userLocation"]);
+						// 如果用户没有开启获取位置
+						if(!res.authSetting["scope.userLocation"]){ 
+							uni.showModal({
+								title: '开启获取地理位置',
+								content: '请设置”位置信息“权限，找到附近的店铺',
+								success: (res2:any) => {
+									if (res2.confirm) {
+										// 使用openSetting调器客户端小程序设置界面，返回用户设置的操作结果
+										uni.openSetting({
+											success(res3:any) {
+												// console.log(res3.authSetting);
+											}
+										});
+									} else if(res2.cancel) {
+										// console.log('用户点击取消');
+									}
+								}
+
+							})
+						}
+					}
+				});
+				//#endif
+				//如果用户没有关闭地理位置功能，直接获取位置并获取商铺
+				uni.getLocation({
+					type: 'gcj02',
+					complete: (res:any)=> {
+							lng=res.longitude;//经度
+							lat=res.latitude;//纬度
+							//获取商铺信息
+							//store/business/index.ts文件中actions内部的getShop方法
+							store.dispatch("business/getShop",{page:1,lng:lng?lng:0,lat:lat?lat:0,success:(pageNum:number)=>{
+									maxPage=pageNum;//总页码数
+							}});
+						}
+				});
+			})
+			return {
+				isIpx,
+				shops
+			};
 		}
 	})
 </script>
