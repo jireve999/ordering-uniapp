@@ -30,7 +30,7 @@
 <script lang="ts">
 	import {defineComponent, computed} from "vue";
 	import {useStore} from "vuex";
-	import {onShow} from "@dcloudio/uni-app"; // 导入uni-app
+	import {onShow, onPullDownRefresh, onReachBottom} from "@dcloudio/uni-app"; // 导入uni-app
 	export default defineComponent({
 		onShareAppMessage(res:any){
 			// if (res.from === 'menu') {
@@ -46,14 +46,15 @@
 			let shops:any = computed(() => store.state.business.shops); // 获取vuex的商铺数据
 			let lng:number=0; // 经度
 			let lat:number=0; // 纬度
-			let maxPage:number=0;//总页数
+			let maxPage:number=0; //总页数
+			let curPage:number=1; //当前页码
 			onShow(() => {
 				//#ifdef MP-WEIXIN || H5 && APP
 				//如果用户关闭了地理位置功能
 				//getSetting获取用户的当前设置
 				uni.getSetting({
 					success: (res:any) => {
-						console.log(res.authSetting, res.authSetting["scope.userLocation"]);
+						// console.log(res.authSetting, res.authSetting["scope.userLocation"]);
 						// 如果用户没有开启获取位置
 						if(!res.authSetting["scope.userLocation"]){ 
 							uni.showModal({
@@ -87,10 +88,31 @@
 							//store/business/index.ts文件中actions内部的getShop方法
 							store.dispatch("business/getShop",{page:1,lng:lng?lng:0,lat:lat?lat:0,success:(pageNum:number)=>{
 									maxPage=pageNum;//总页码数
+									console.log("maxPage",maxPage);
 							}});
 						}
 				});
-			})
+				// 下拉刷新
+				onPullDownRefresh(()=>{
+					curPage=1; // 将当前页码数设置为1
+					store.dispatch("business/getShop",{page:curPage,lng:lng?lng:0,lat:lat?lat:0,success:(pageNum:number)=>{
+							maxPage=pageNum;//总页码数
+						},
+						complete:()=>{
+							// 服务端请求完成后，停止下拉刷新
+							uni.stopPullDownRefresh();
+						}
+					});
+				}) 
+				// 上拉加载更多
+				onReachBottom(()=>{
+					if (curPage < maxPage) {
+						curPage++;
+						store.dispatch("business/getShopPage",{page:curPage,lng:lng?lng:0,lat:lat?lat:0});
+						// console.log(curPage);
+					}
+				})
+			});
 			return {
 				isIpx,
 				shops

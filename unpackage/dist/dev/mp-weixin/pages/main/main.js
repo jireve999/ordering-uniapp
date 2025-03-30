@@ -13,10 +13,11 @@ const _sfc_main = common_vendor.defineComponent({
     let shops = common_vendor.computed(() => store.state.business.shops);
     let lng = 0;
     let lat = 0;
+    let maxPage = 0;
+    let curPage = 1;
     common_vendor.onShow(() => {
       common_vendor.index.getSetting({
         success: (res) => {
-          common_vendor.index.__f__("log", "at pages/main/main.vue:56", res.authSetting, res.authSetting["scope.userLocation"]);
           if (!res.authSetting["scope.userLocation"]) {
             common_vendor.index.showModal({
               title: "开启获取地理位置",
@@ -40,7 +41,29 @@ const _sfc_main = common_vendor.defineComponent({
           lng = res.longitude;
           lat = res.latitude;
           store.dispatch("business/getShop", { page: 1, lng: lng ? lng : 0, lat: lat ? lat : 0, success: (pageNum) => {
+            maxPage = pageNum;
+            common_vendor.index.__f__("log", "at pages/main/main.vue:91", "maxPage", maxPage);
           } });
+        }
+      });
+      common_vendor.onPullDownRefresh(() => {
+        curPage = 1;
+        store.dispatch("business/getShop", {
+          page: curPage,
+          lng: lng ? lng : 0,
+          lat: lat ? lat : 0,
+          success: (pageNum) => {
+            maxPage = pageNum;
+          },
+          complete: () => {
+            common_vendor.index.stopPullDownRefresh();
+          }
+        });
+      });
+      common_vendor.onReachBottom(() => {
+        if (curPage < maxPage) {
+          curPage++;
+          store.dispatch("business/getShopPage", { page: curPage, lng: lng ? lng : 0, lat: lat ? lat : 0 });
         }
       });
     });
