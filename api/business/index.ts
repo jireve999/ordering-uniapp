@@ -1,5 +1,5 @@
 import config from "../../static/ts/conf";
-import {request} from "../../static/utils/request";
+import {request} from "../../static/ts/utils/request";
 
 //显示首页商铺
 export function getShopData(data:{}){

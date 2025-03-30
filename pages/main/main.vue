@@ -2,7 +2,7 @@
 	<view class="page">
 		<view class="status_bar"></view>
 		<view class="header">
-			<view :class="{'search-header':true,ipx:isIpx}">
+			<view :class="{'search-header':true,ipx:isIpx}" @click="isShow=true">
 				<view class="search-wrap">
 					<view class="icon"></view>
 					<view class="text">请输入商家名或菜品</view>
@@ -24,14 +24,17 @@
 				</view>
 			</view>
 		</view>
+		<Search :show="isShow" @close="isShow=false"></Search>
 	</view>
 </template>
 
 <script lang="ts">
-	import {defineComponent, computed} from "vue";
+	import {defineComponent, computed,ref} from "vue";
 	import {useStore} from "vuex";
 	import {onShow, onPullDownRefresh, onReachBottom} from "@dcloudio/uni-app"; // 导入uni-app
+	import Search from "../../components/search";
 	export default defineComponent({
+		// 支持分享小程序
 		onShareAppMessage(res:any){
 			// if (res.from === 'menu') {
 				return {
@@ -39,6 +42,9 @@
 					path: '/pages/main/main'
 				}
 			// }
+		},
+		components:{
+			Search
 		},
 		setup() {
 			let store:any = useStore();
@@ -48,6 +54,7 @@
 			let lat:number=0; // 纬度
 			let maxPage:number=0; //总页数
 			let curPage:number=1; //当前页码
+			let isShow:any=ref(false);//是否显示搜索组件
 			onShow(() => {
 				//#ifdef MP-WEIXIN || H5 && APP
 				//如果用户关闭了地理位置功能
@@ -115,7 +122,8 @@
 			});
 			return {
 				isIpx,
-				shops
+				shops,
+				isShow
 			};
 		}
 	})

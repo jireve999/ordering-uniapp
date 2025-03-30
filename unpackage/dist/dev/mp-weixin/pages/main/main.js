@@ -1,11 +1,16 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const Search = () => "../../components/search/index.js";
 const _sfc_main = common_vendor.defineComponent({
+  // 支持分享小程序
   onShareAppMessage(res) {
     return {
       title: "点餐小程序",
       path: "/pages/main/main"
     };
+  },
+  components: {
+    Search
   },
   setup() {
     let store = common_vendor.useStore();
@@ -15,6 +20,7 @@ const _sfc_main = common_vendor.defineComponent({
     let lat = 0;
     let maxPage = 0;
     let curPage = 1;
+    let isShow = common_vendor.ref(false);
     common_vendor.onShow(() => {
       common_vendor.index.getSetting({
         success: (res) => {
@@ -42,7 +48,7 @@ const _sfc_main = common_vendor.defineComponent({
           lat = res.latitude;
           store.dispatch("business/getShop", { page: 1, lng: lng ? lng : 0, lat: lat ? lat : 0, success: (pageNum) => {
             maxPage = pageNum;
-            common_vendor.index.__f__("log", "at pages/main/main.vue:91", "maxPage", maxPage);
+            common_vendor.index.__f__("log", "at pages/main/main.vue:98", "maxPage", maxPage);
           } });
         }
       });
@@ -69,14 +75,20 @@ const _sfc_main = common_vendor.defineComponent({
     });
     return {
       isIpx,
-      shops
+      shops,
+      isShow
     };
   }
 });
+if (!Array) {
+  const _component_Search = common_vendor.resolveComponent("Search");
+  _component_Search();
+}
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
     a: _ctx.isIpx ? 1 : "",
-    b: common_vendor.f(_ctx.shops, (item, k0, i0) => {
+    b: common_vendor.o(($event) => _ctx.isShow = true),
+    c: common_vendor.f(_ctx.shops, (item, k0, i0) => {
       return {
         a: item.logo,
         b: common_vendor.t(item.branch_shop_name),
@@ -84,6 +96,10 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         d: common_vendor.t(item.address),
         e: item.branch_shop_id
       };
+    }),
+    d: common_vendor.o(($event) => _ctx.isShow = false),
+    e: common_vendor.p({
+      show: _ctx.isShow
     })
   };
 }
