@@ -8,6 +8,20 @@
     "miniprogram": {
       "list": [
         {
+          "name": "点餐param",
+          "pathName": "pages/goods/index",
+          "query": "branch_shop_id=333071944&table_code=001&gid=1111",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "点餐",
+          "pathName": "pages/goods/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "搜索结果",
           "pathName": "pages/search/index",
           "query": "kwords=炸鸡",

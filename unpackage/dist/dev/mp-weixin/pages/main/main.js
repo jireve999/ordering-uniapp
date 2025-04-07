@@ -73,10 +73,14 @@ const _sfc_main = common_vendor.defineComponent({
         }
       });
     });
+    let goPage = (url) => {
+      common_vendor.index.navigateTo({ url });
+    };
     return {
       isIpx,
       shops,
-      isShow
+      isShow,
+      goPage
     };
   }
 });
@@ -94,7 +98,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         b: common_vendor.t(item.branch_shop_name),
         c: common_vendor.t(item.distance),
         d: common_vendor.t(item.address),
-        e: item.branch_shop_id
+        e: item.branch_shop_id,
+        f: common_vendor.o(($event) => _ctx.goPage("/pages/goods/index?branch_shop_id=" + item.branch_shop_id), item.branch_shop_id)
       };
     }),
     d: common_vendor.o(($event) => _ctx.isShow = false),

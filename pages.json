@@ -14,7 +14,46 @@
 				"navigationBarTitleText": "搜索",
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/goods/index",
+			"style": {
+				"navigationBarTitleText": "点餐",
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/goods/meal",
+			"style": {
+				"navigationBarTitleText": "套餐",
+				"disableScroll": false
+			}
+		},
+		{
+			"path": "pages/business_map/index",
+			"style": {
+				"navigationBarTitleText": "商家位置",
+				"disableScroll": false
+			}
+		},
+		{
+			"path": "pages/main/focus",
+			"style": {
+				"navigationBarTitleText": "关注公众号",
+				"navigationStyle": "custom",
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "会员登录",
+				"disableScroll": false
+			}
 		}
+	
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

@@ -10,7 +10,7 @@
 			</view>
 		</view>
 		<view class="shop-main">
-			<view class="shop-list" v-for="item in shops" :key="item.branch_shop_id">
+			<view class="shop-list" v-for="item in shops" :key="item.branch_shop_id" @click="goPage('/pages/goods/index?branch_shop_id='+item.branch_shop_id+'')">
 				<view class="shop-wrap">
 					<view class="image">
 						<image :src="item.logo" />
@@ -120,10 +120,14 @@
 					}
 				})
 			});
+			let goPage:Function=(url:string)=>{
+				uni.navigateTo({url});
+			}
 			return {
 				isIpx,
 				shops,
-				isShow
+				isShow,
+				goPage
 			};
 		}
 	})

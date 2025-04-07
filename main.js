@@ -1,5 +1,6 @@
 import App from './App'
 import store from './store'
+import utils from "./static/ts/utils";
 
 // #ifndef VUE3
 import Vue from 'vue'
@@ -16,6 +17,7 @@ app.$mount()
 import { createSSRApp } from 'vue'
 export function createApp() {
   const app = createSSRApp(App)
+  app.config.globalProperties.$utils = utils;//将utils挂载到vue实例上，这样可以全局使用
   app.use(store); // 必须在这里使用use启用vuex
   return {
     app

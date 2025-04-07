@@ -1,7 +1,12 @@
 {
   "pages": [
     "pages/main/main",
-    "pages/search/index"
+    "pages/search/index",
+    "pages/goods/index",
+    "pages/goods/meal",
+    "pages/business_map/index",
+    "pages/main/focus",
+    "pages/login/index"
   ],
   "window": {
     "navigationBarTextStyle": "white",

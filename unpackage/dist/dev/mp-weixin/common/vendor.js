@@ -6921,9 +6921,9 @@ function initOnError() {
   };
 }
 function initRuntimeSocketService() {
-  const hosts = "127.0.0.1,192.168.2.5";
+  const hosts = "127.0.0.1,192.168.2.7";
   const port = "8090";
-  const id = "mp-weixin_zKXpul";
+  const id = "mp-weixin_lM0UZD";
   const lazy = typeof swan !== "undefined";
   let restoreError = lazy ? () => {
   } : initOnError();
@@ -8553,6 +8553,7 @@ exports.createStore = createStore;
 exports.defineComponent = defineComponent;
 exports.e = e;
 exports.f = f;
+exports.getCurrentInstance = getCurrentInstance;
 exports.index = index;
 exports.o = o;
 exports.onLoad = onLoad;
@@ -8560,6 +8561,7 @@ exports.onPullDownRefresh = onPullDownRefresh;
 exports.onReachBottom = onReachBottom;
 exports.onShow = onShow;
 exports.p = p;
+exports.reactive = reactive;
 exports.ref = ref;
 exports.resolveComponent = resolveComponent;
 exports.t = t;
