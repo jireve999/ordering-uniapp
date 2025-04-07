@@ -2,13 +2,17 @@
 const common_vendor = require("../../common/vendor.js");
 const Search = () => "../../components/search/index.js";
 const _sfc_main = common_vendor.defineComponent({
-  // 支持分享小程序
+  name: "main-component",
+  //支持分享小程序
   onShareAppMessage(res) {
-    return {
-      title: "点餐小程序",
-      path: "/pages/main/main"
-    };
+    if (res.from === "menu") {
+      return {
+        title: "点餐系统",
+        path: "/pages/main/main"
+      };
+    }
   },
+  //引入组件
   components: {
     Search
   },
@@ -16,10 +20,10 @@ const _sfc_main = common_vendor.defineComponent({
     let store = common_vendor.useStore();
     let isIpx = common_vendor.computed(() => store.state.system.isIpx);
     let shops = common_vendor.computed(() => store.state.business.shops);
-    let lng = 0;
-    let lat = 0;
     let maxPage = 0;
     let curPage = 1;
+    let lng = 0;
+    let lat = 0;
     let isShow = common_vendor.ref(false);
     common_vendor.onShow(() => {
       common_vendor.index.getSetting({
@@ -48,39 +52,40 @@ const _sfc_main = common_vendor.defineComponent({
           lat = res.latitude;
           store.dispatch("business/getShop", { page: 1, lng: lng ? lng : 0, lat: lat ? lat : 0, success: (pageNum) => {
             maxPage = pageNum;
-            common_vendor.index.__f__("log", "at pages/main/main.vue:98", "maxPage", maxPage);
           } });
         }
       });
-      common_vendor.onPullDownRefresh(() => {
-        curPage = 1;
-        store.dispatch("business/getShop", {
-          page: curPage,
-          lng: lng ? lng : 0,
-          lat: lat ? lat : 0,
-          success: (pageNum) => {
-            maxPage = pageNum;
-          },
-          complete: () => {
-            common_vendor.index.stopPullDownRefresh();
-          }
-        });
-      });
-      common_vendor.onReachBottom(() => {
-        if (curPage < maxPage) {
-          curPage++;
-          store.dispatch("business/getShopPage", { page: curPage, lng: lng ? lng : 0, lat: lat ? lat : 0 });
+    });
+    common_vendor.onPullDownRefresh(() => {
+      curPage = 1;
+      store.dispatch("business/getShop", {
+        page: curPage,
+        lng: lng ? lng : 0,
+        lat: lat ? lat : 0,
+        success: (pageNum) => {
+          maxPage = pageNum;
+        },
+        complete: () => {
+          common_vendor.index.stopPullDownRefresh();
         }
       });
     });
+    common_vendor.onReachBottom(() => {
+      if (curPage < maxPage) {
+        curPage++;
+        store.dispatch("business/getShopPage", { page: curPage, lng: lng ? lng : 0, lat: lat ? lat : 0 });
+      }
+    });
     let goPage = (url) => {
-      common_vendor.index.navigateTo({ url });
+      common_vendor.index.redirectTo({
+        url
+      });
     };
     return {
       isIpx,
       shops,
-      isShow,
-      goPage
+      goPage,
+      isShow
     };
   }
 });
@@ -92,22 +97,23 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
     a: _ctx.isIpx ? 1 : "",
     b: common_vendor.o(($event) => _ctx.isShow = true),
-    c: common_vendor.f(_ctx.shops, (item, k0, i0) => {
+    c: common_vendor.f(_ctx.shops, (item, index, i0) => {
       return {
         a: item.logo,
         b: common_vendor.t(item.branch_shop_name),
         c: common_vendor.t(item.distance),
         d: common_vendor.t(item.address),
-        e: item.branch_shop_id,
-        f: common_vendor.o(($event) => _ctx.goPage("/pages/goods/index?branch_shop_id=" + item.branch_shop_id), item.branch_shop_id)
+        e: index,
+        f: common_vendor.o(($event) => _ctx.goPage("/pages/goods/index?branch_shop_id=" + item.branch_shop_id), index)
       };
     }),
-    d: common_vendor.o(($event) => _ctx.isShow = false),
-    e: common_vendor.p({
+    d: _ctx.isIpx ? 1 : "",
+    e: common_vendor.o(($event) => _ctx.isShow = false),
+    f: common_vendor.p({
       show: _ctx.isShow
     })
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-4f50ca8f"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render]]);
 wx.createPage(MiniProgramPage);
 //# sourceMappingURL=../../../.sourcemap/mp-weixin/pages/main/main.js.map
