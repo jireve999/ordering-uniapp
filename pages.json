@@ -52,8 +52,72 @@
 				"navigationBarTitleText": "会员登录",
 				"disableScroll": false
 			}
+		},
+		{
+			"path": "pages/my/index",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"disableScroll": true,
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/myorder/index",
+			"style": {
+				"navigationBarTitleText": "我的订单",
+				"disableScroll": false,
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/myorder/details",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/myorder/refund",
+			"style": {
+				"navigationBarTitleText": "我的订单",
+				"enablePullDownRefresh": true
+			}
 		}
-	
+	],
+	"subPackages": [
+		{
+			"root": "user_pages",
+			"pages": [
+				{
+					"path": "order/index",
+					"style": {
+						"navigationBarTitleText": "提交订单",
+						"disableScroll": false
+					}
+				},
+				{
+					"path": "order/pay_success",
+					"style": {
+						"navigationBarTitleText": "付款成功",
+						"disableScroll": false
+					}
+				},
+				{
+					"path": "profile/index",
+					"style": {
+						"navigationBarTitleText": "个人资料",
+						"disableScroll": true
+					}
+				},
+				{
+					"path": "bind_cellphone/index",
+					"style": {
+						"navigationBarTitleText": "绑定手机号",
+						"disableScroll": true
+					}
+				}
+			]
+		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

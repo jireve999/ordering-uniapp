@@ -6,7 +6,22 @@
     "pages/goods/meal",
     "pages/business_map/index",
     "pages/main/focus",
-    "pages/login/index"
+    "pages/login/index",
+    "pages/my/index",
+    "pages/myorder/index",
+    "pages/myorder/details",
+    "pages/myorder/refund"
+  ],
+  "subPackages": [
+    {
+      "root": "user_pages",
+      "pages": [
+        "order/index",
+        "order/pay_success",
+        "profile/index",
+        "bind_cellphone/index"
+      ]
+    }
   ],
   "window": {
     "navigationBarTextStyle": "white",

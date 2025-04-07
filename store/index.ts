@@ -6,6 +6,8 @@ import goods from "./goods";
 import cart from "./cart";
 import meal from "./meal";
 import user from "./user";
+import order from "./order";
+import vcode from "./vcode";
 
 export default createStore({
   modules:{
@@ -15,6 +17,8 @@ export default createStore({
     goods,
     cart,
     meal,
-    user
+    user,
+    order,
+    vcode
   }
 })

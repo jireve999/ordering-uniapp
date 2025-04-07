@@ -11,6 +11,14 @@ if (!Math) {
   "./pages/business_map/index.js";
   "./pages/main/focus.js";
   "./pages/login/index.js";
+  "./pages/my/index.js";
+  "./pages/myorder/index.js";
+  "./pages/myorder/details.js";
+  "./pages/myorder/refund.js";
+  "./user_pages/order/index.js";
+  "./user_pages/order/pay_success.js";
+  "./user_pages/profile/index.js";
+  "./user_pages/bind_cellphone/index.js";
 }
 const _sfc_main = {
   onLaunch: function() {
